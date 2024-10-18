@@ -1,6 +1,7 @@
 package example;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,7 @@ public class EnglishChineseClientGUI extends JFrame {
     private JTextArea outputArea;
     private JTextField inputField;
     private JButton translateButton;
-    private JButton exampleButton; // Button to get example sentences
+    private JButton exampleButton;
 
     public EnglishChineseClientGUI() {
         initializeUI();
@@ -17,9 +18,10 @@ public class EnglishChineseClientGUI extends JFrame {
 
     private void initializeUI() {
         setTitle("English-Chinese Translator");
-        setSize(500, 400);
+        setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         // Setup output area for displaying translations
         outputArea = new JTextArea();
@@ -29,34 +31,52 @@ public class EnglishChineseClientGUI extends JFrame {
         outputArea.setWrapStyleWord(true);
         outputArea.setBackground(Color.WHITE);
         outputArea.setBorder(BorderFactory.createTitledBorder("Translation Output"));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        add(new JScrollPane(outputArea), gbc);
 
         // Setup input field for user to enter text
         inputField = new JTextField();
         inputField.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
-        inputField.setBorder(BorderFactory.createTitledBorder("Enter Text"));
+        inputField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.8;
+        add(inputField, gbc);
 
         // Setup translate button
         translateButton = new JButton("Translate");
         translateButton.setFont(new Font("Arial", Font.BOLD, 16));
         translateButton.setPreferredSize(new Dimension(120, 40));
+        translateButton.setBackground(Color.BLUE);
+        translateButton.setForeground(Color.WHITE);
+        translateButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(translateButton, gbc);
 
         // Setup example button
         exampleButton = new JButton("Get Example");
         exampleButton.setFont(new Font("Arial", Font.BOLD, 16));
         exampleButton.setPreferredSize(new Dimension(120, 40));
-
-        // Create panels to hold components
-        JPanel inputPanel = new JPanel(new BorderLayout());
-        inputPanel.add(inputField, BorderLayout.CENTER);
-        inputPanel.add(translateButton, BorderLayout.EAST);
-
-        JPanel examplePanel = new JPanel(new FlowLayout());
-        examplePanel.add(exampleButton);
-
-        // Add components to the frame
-        add(new JScrollPane(outputArea), BorderLayout.CENTER);
-        add(inputPanel, BorderLayout.NORTH);
-        add(examplePanel, BorderLayout.SOUTH);
+        exampleButton.setBackground(Color.GREEN);
+        exampleButton.setForeground(Color.WHITE);
+        exampleButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(exampleButton, gbc);
 
         // Add action listeners to buttons
         translateButton.addActionListener(new TranslateAction());
